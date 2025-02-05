@@ -1,7 +1,7 @@
 "use client";
 import AwardButton from "@/components/AwardButton";
 import { useGSAP } from "@gsap/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { TiLocationArrow } from "react-icons/ti";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
@@ -12,21 +12,13 @@ const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [hasClicked, setHasClicked] = useState(false);
 
-  const [loading, setLoading] = useState(true);
-  const [loadedVideos, setLoadedVideos] = useState(0);
-
   const totalVideos = 4;
   const nextVdRef = useRef<HTMLVideoElement>(null);
-
-  const srcSource = (index: number) => `/videos/hero-${index}.mp4`;
+  const srcSource = (index: number) => `videos/hero-${index}.mp4`;
 
   const handleMiniVdClick = () => {
     setHasClicked(true);
-    setCurrentIndex(prev => (prev % totalVideos) + 1);
-  };
-
-  const handleVideoLoad = () => {
-    setLoadedVideos(prev => prev + 1);
+    setCurrentIndex(prevIndex => (prevIndex % totalVideos) + 1);
   };
 
   useGSAP(
@@ -71,23 +63,8 @@ const Hero = () => {
     });
   });
 
-  useEffect(() => {
-    if (loadedVideos === totalVideos - 1) {
-      setLoading(false);
-    }
-  }, [loadedVideos]);
-
   return (
     <div className='relative h-dvh w-screen overflow-x-hidden'>
-      {/* {loading && (
-        <div className='flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50'>
-          <div className='three-body'>
-            <div className='three-body__dot'></div>
-            <div className='three-body__dot'></div>
-            <div className='three-body__dot'></div>
-          </div>
-        </div>
-      )} */}
       <div
         id='video-frame'
         className='relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-blue-75'>
@@ -97,12 +74,12 @@ const Hero = () => {
               className='origin-center scale-50 opacity-0 transition-all ease-in duration-300 hover:scale-100 hover:opacity-100'
               onClick={handleMiniVdClick}>
               <video
+                ref={nextVdRef}
                 id='current-video'
                 className='size-64 origin-center scale-150 object-cover object-center'
                 src={srcSource((currentIndex % totalVideos) + 1)}
                 loop
                 muted
-                onLoadedData={handleVideoLoad}
               />
             </div>
           </div>
@@ -113,7 +90,6 @@ const Hero = () => {
             loop
             muted
             className='absolute-center invisible absolute z-20 size-64 object-cover object-center'
-            onLoadedData={handleVideoLoad}
           />
           <video
             src={srcSource(currentIndex === totalVideos - 1 ? 1 : currentIndex)}
@@ -121,7 +97,6 @@ const Hero = () => {
             loop
             muted
             className='absolute left-0 top-0 size-full object-cover object-center'
-            onLoadedData={handleVideoLoad}
           />
         </div>
         <h1 className='special-font hero-heading absolute bottom-5 right-5 text-blue-75 z-40'>
