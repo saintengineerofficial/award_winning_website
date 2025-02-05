@@ -32,7 +32,11 @@ const Hero = () => {
           height: "100%",
           duration: 1,
           ease: "power1.inOut",
-          onStart: () => nextVdRef.current?.play(),
+          onStart: () => {
+            if (nextVdRef.current) {
+              nextVdRef.current.play();
+            }
+          },
         });
         gsap.from("#current-video", {
           transformOrigin: "center center",
