@@ -8,7 +8,6 @@ import Footer from "@/sections/Footer";
 export default function Home() {
   return (
     <main className='relative min-h-screen w-screen overflow-x-hidden'>
-      11111
       <Navbar />
       <Hero />
       <About />
