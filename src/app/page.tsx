@@ -4,7 +4,7 @@
 // import Features from "@/sections/Features";
 // import Story from "@/sections/Story";
 // import Contact from "@/sections/Contact";
-// import Footer from "@/sections/Footer";
+import Footer from "@/sections/Footer";
 export default function Home() {
   return (
     <main className='relative min-h-screen w-screen overflow-x-hidden'>
@@ -14,8 +14,8 @@ export default function Home() {
       <About />
       <Features />
       <Story />
-      <Contact />
-      <Footer /> */}
+      <Contact /> */}
+      <Footer />
     </main>
   );
 }
